@@ -1,0 +1,76 @@
+        const voiceChannel = interaction.options.getChannel('channel');
+
+        const songUrl = interaction.options.getString('query')
+
+        const voiceConnection = joinVoiceChannel({
+            channelId: voiceChannel.id, 
+            guildId: interaction.guild.id,
+            adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+        })
+            
+        player.on(AudioPlayerStatus.Playing, () => {
+            console.log('The audio player has started playing!');
+        });
+
+        player.on('error', error => {
+            console.error(`Error: ${error.message}`);
+        });
+
+        //let resource = createAudioResource('C:\\Users\\gerso\\Documents\\CS-P\\discord-bot\\audio\\track.mp3', { inlineVolume: true })
+        
+        //let stream = ytdl(songUrl, { filter: 'audioonly' })
+        //let songInfo = await getInfo(songUrl)          
+  let stream = ''
+    
+            let resource = createAudioResource(stream)
+            player.play(resource)
+        
+            const subscription = voiceConnection.subscribe(player)
+    
+            const embed = new EmbedBuilder().setTitle(`🎶 Playing ${stream.title} by ${stream.channel}`).setColor('Green')
+    
+            interaction.reply({ embeds: [embed] })
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+        const YouTube = require("youtube-sr").default;
+        
+        addChannelOption((option) =>
+            option.setName('channel').
+            setDescription('The channel to join').
+            setRequired(true).
+            addChannelTypes(ChannelType.GuildVoice)).
+        addStringOption(option => 
+            option.setName('url').
+            setDescription('Enter your song url').
+            setRequired(false)).  
+        
+        //const voiceChannel = interaction.options.getChannel('channel');
+        //const songUrl = interaction.options.getString('url')
+        //let title = ''
+
+        /*if(query) {
+            const videos = await YouTube.search(query, { limit: 1 });
+            let song = videos.map((m,i) => [m.title, m.url])
+            title = song[0][0]
+
+            embed = new EmbedBuilder().setTitle(`🎶 Playing ${title}`).setColor('Green')
+
+            client.Distube.play(voiceChannel, song[0][1], {
+                member: interaction.member,
+                textChannel: interaction.channel,
+                interaction
+            })
+
+        } else {
+            let vid = await YouTube.getVideo(songUrl)
+            title = vid.title
+
+            client.Distube.play(voiceChannel, songUrl, {
+                member: interaction.member,
+                textChannel: interaction.channel,
+                interaction
+            })
+
+            embed = new EmbedBuilder().setTitle(`🎶 Playing ${title}`).setColor('Green')
+        } */
